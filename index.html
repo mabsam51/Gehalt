@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gehaltsrechner</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
@@ -27,11 +27,21 @@
       <section>
         <hgroup>
           <h2>Berechne deine Grundvergütung</h2>
-          <h3>Basierend auf TVöD Bund (gültig ab 01.03.2024) und 39h/Woche</h3>
+          <h3>TVöD Bund · 39h/Woche</h3>
         </hgroup>
+
+        <div id="alert" class="hidden"></div>
 
         <form id="gehaltsForm">
           <div class="grid">
+            <div>
+              <label for="jahr">Tarifjahr</label>
+              <select id="jahr" name="jahr" required>
+                <option value="2024" selected>2024 (gültig ab 01.03.2024)</option>
+                <option value="2025">2025</option>
+              </select>
+            </div>
+
             <div>
               <label for="eg">Entgeltgruppe</label>
               <select id="eg" name="eg" required></select>
@@ -49,13 +59,22 @@
           </details>
 
           <label for="stunden">Tatsächliche Wochenstunden</label>
-          <input type="number" id="stunden" name="stunden" placeholder="z. B. 20" step="0.1" min="0" required>
+          <input type="number" id="stunden" name="stunden" placeholder="z. B. 20" step="0.1" min="0" required />
 
           <button type="submit">Berechnen</button>
         </form>
 
         <p id="ergebnis"></p>
         <p id="hinweis" class="muted"></p>
+
+        <article id="info" class="mt-2">
+          <h4>Hinweise</h4>
+          <ul>
+            <li>Bei lokalem Öffnen via <code>file://</code> kann das Laden der JSON blockiert sein. Nutze am besten einen lokalen Webserver.</li>
+            <li>Das Tarifjahr wird über eine externe JSON geladen (<code>data/tvoed_YYYY.json</code>).</li>
+            <li>Falls eine JSON als vorläufig markiert ist, erscheint oben ein Hinweis.</li>
+          </ul>
+        </article>
       </section>
     </div>
   </main>
@@ -69,5 +88,6 @@
 
   <!-- Externe JS-Datei -->
   <script src="js/script.js"></script>
+  <noscript>Bitte JavaScript aktivieren.</noscript>
 </body>
 </html>
