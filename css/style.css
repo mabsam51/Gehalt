@@ -1,0 +1,22 @@
+main.container {
+  padding: 2rem 1rem;
+}
+
+#ergebnis {
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+#hinweis.muted {
+  color: var(--muted-color);
+  margin-top: 0.25rem;
+}
+
+.tabellenentgelt {
+  font-weight: 600;
+  margin: 0.25rem 0 0 0;
+}
+
+.mt-0-5 {
+  margin-top: 0.5rem;
+}
