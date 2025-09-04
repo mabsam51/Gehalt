@@ -31,7 +31,7 @@ const DEFAULT_VALID_FROM = {
   "2025": "2025-04-01"
 };
 
-// -------------------- Fallback-Daten --------------------
+// -------------------- Fallback-Daten für 2024 --------------------
 const FALLBACK_TVOED_2024 = {
   "EG 15Ü": [6670.43, 7379.87, 8051.94, 8500.01, 8604.56, null],
   "EG 15":  [5504.00, 5863.92, 6265.40, 6813.49, 7377.29, 7748.20],
@@ -185,6 +185,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const stufeIdx = Math.max(0, (parseInt(stufeSelect.value, 10) || 1) - 1);
     const monatsentgelt = getMonatsentgelt(dataset, eg, stufeIdx);
 
+    const tabellenentgelt = document.getElementById("tabellenentgelt");
     tabellenentgelt.textContent =
       monatsentgelt == null
         ? "Für die gewählte Kombination ist in der Tabelle kein Betrag ausgewiesen."
