@@ -10,7 +10,7 @@ function berechneVerguetung(monatsentgelt, stunden) {
 function showAlert(msg, type = "info") {
   const el = document.getElementById("alert");
   el.textContent = msg;
-  el.className = ""; // reset
+  el.className = "";
   el.classList.add(type);
   el.classList.remove("hidden");
 }
@@ -22,9 +22,14 @@ function hideAlert() {
 }
 
 function isMetaKey(key) {
-  // Alle technischen Keys, die nicht als EG interpretiert werden sollen
   return key.startsWith("__");
 }
+
+// Standard-Gültigkeit, falls eine JSON kein __meta.valid_from mitliefert
+const DEFAULT_VALID_FROM = {
+  "2024": "2024-03-01",
+  "2025": "2025-04-01"
+};
 
 // -------------------- Fallback-Daten --------------------
 const FALLBACK_TVOED_2024 = {
@@ -49,20 +54,11 @@ const FALLBACK_TVOED_2024 = {
   "EG 1":   [null,     2355.52, 2388.86, 2430.55, 2469.42, 2569.47]
 };
 
-// Für 2025 nehmen wir als Fallback dieselben Werte, markieren aber "vorläufig".
-const FALLBACK_TVOED_2025 = {
-  "__meta": {
-    "year": 2025,
-    "provisional": true,
-    "note": "Platzhalter: Werte identisch zu 2024 bis finale Tabelle vorliegt."
-  },
-  ...FALLBACK_TVOED_2024
-};
-
 // -------------------- App-Logik --------------------
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.getElementById("gehaltsForm");
   const jahrSelect = document.getElementById("jahr");
+  const gueltigkeit = document.getElementById("gueltigkeit");
   const egSelect = document.getElementById("eg");
   const stufeSelect = document.getElementById("stufe");
   const tabellenentgelt = document.getElementById("tabellenentgelt");
@@ -73,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let dataCache = {}; // Cache pro Jahr
   await loadYear(jahrSelect.value); // initial
 
-  // --- Events ---
+  // Events
   jahrSelect.addEventListener("change", async () => {
     await loadYear(jahrSelect.value, true);
   });
@@ -120,20 +116,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (year === "2024") {
           dataCache[year] = FALLBACK_TVOED_2024;
           showAlert("Hinweis: 2024-Tabelle konnte nicht geladen werden. Es werden Fallback-Daten verwendet.", "info");
-        } else if (year === "2025") {
-          dataCache[year] = FALLBACK_TVOED_2025;
-          showAlert("Hinweis: 2025-Tabelle konnte nicht geladen werden. Es werden vorläufige Fallback-Daten verwendet.", "warning");
+        } else {
+          showAlert(`Hinweis: ${year}-Tabelle konnte nicht geladen werden.`, "warning");
+          return; // ohne Daten kein Befüllen
         }
       }
     }
 
-    // Meta-Hinweise
+    // Gültigkeit anzeigen
     const meta = dataCache[year]?.__meta;
+    const validFrom = meta?.valid_from || DEFAULT_VALID_FROM[year] || "";
+    gueltigkeit.textContent = validFrom
+      ? `Gültig ab: ${new Date(validFrom).toLocaleDateString("de-DE")}`
+      : "";
+
+    // Vorläufige Daten markieren (falls in JSON gesetzt)
     if (meta?.provisional) {
       showAlert(meta.note || "Vorläufige Daten für dieses Tarifjahr.", "warning");
     } else {
-      // Nur ausblenden, wenn nicht bereits ein Fehlerhinweis aktiv ist
-      if (!document.getElementById("alert").classList.contains("info")) hideAlert();
+      hideAlert();
     }
 
     // Dropdowns befüllen

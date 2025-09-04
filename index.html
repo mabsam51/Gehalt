@@ -38,8 +38,9 @@
               <label for="jahr">Tarifjahr</label>
               <select id="jahr" name="jahr" required>
                 <option value="2024" selected>2024 (gültig ab 01.03.2024)</option>
-                <option value="2025">2025</option>
+                <option value="2025">2025 (gültig ab 01.04.2025)</option>
               </select>
+              <small id="gueltigkeit" class="muted block"></small>
             </div>
 
             <div>
@@ -71,8 +72,7 @@
           <h4>Hinweise</h4>
           <ul>
             <li>Bei lokalem Öffnen via <code>file://</code> kann das Laden der JSON blockiert sein. Nutze am besten einen lokalen Webserver.</li>
-            <li>Das Tarifjahr wird über eine externe JSON geladen (<code>data/tvoed_YYYY.json</code>).</li>
-            <li>Falls eine JSON als vorläufig markiert ist, erscheint oben ein Hinweis.</li>
+            <li>Die Entgelttabellen werden aus <code>data/tvoed_YYYY.json</code> geladen. Die Gültigkeit steht unter dem Auswahlfeld.</li>
           </ul>
         </article>
       </section>
@@ -86,7 +86,6 @@
     </small>
   </footer>
 
-  <!-- Externe JS-Datei -->
   <script src="js/script.js"></script>
   <noscript>Bitte JavaScript aktivieren.</noscript>
 </body>

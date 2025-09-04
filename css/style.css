@@ -17,35 +17,18 @@ main.container {
   margin: 0.25rem 0 0 0;
 }
 
-.mt-0-5 {
-  margin-top: 0.5rem;
-}
+.mt-0-5 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 2rem; }
 
-.mt-2 {
-  margin-top: 2rem;
-}
+.block { display: block; margin-top: .25rem; }
 
-/* einfache Alert-Stile */
+/* Alerts */
 #alert {
   border-radius: 8px;
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
 }
-#alert.error {
-  background: #fee;
-  border: 1px solid #f5c2c7;
-  color: #b02a37;
-}
-#alert.info {
-  background: #eef7ff;
-  border: 1px solid #b6daff;
-  color: #0b5ed7;
-}
-#alert.warning {
-  background: #fff8e1;
-  border: 1px solid #ffe28a;
-  color: #8a6d1d;
-}
-.hidden {
-  display: none;
-}
+#alert.error   { background: #fee;    border: 1px solid #f5c2c7; color: #b02a37; }
+#alert.info    { background: #eef7ff; border: 1px solid #b6daff; color: #0b5ed7; }
+#alert.warning { background: #fff8e1; border: 1px solid #ffe28a; color: #8a6d1d; }
+.hidden { display: none; }
